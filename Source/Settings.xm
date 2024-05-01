@@ -1,10 +1,11 @@
+#import "../YTLitePlus.h"
 #import "../Tweaks/YouTubeHeader/YTSettingsViewController.h"
 #import "../Tweaks/YouTubeHeader/YTSearchableSettingsViewController.h"
 #import "../Tweaks/YouTubeHeader/YTSettingsSectionItem.h"
 #import "../Tweaks/YouTubeHeader/YTSettingsSectionItemManager.h"
 #import "../Tweaks/YouTubeHeader/YTUIUtils.h"
 #import "../Tweaks/YouTubeHeader/YTSettingsPickerViewController.h"
-#import "../YTLitePlus.h"
+#import "AppIconOptionsController.h"
 
 static BOOL IsEnabled(NSString *key) {
     return [[NSUserDefaults standardUserDefaults] boolForKey:key];
@@ -63,6 +64,21 @@ extern NSBundle *YTLitePlusBundle();
         return [%c(YTUIUtils) openURL:[NSURL URLWithString:@"https://github.com/Balackburn/YTLitePlus/releases/latest"]];
     }];
     [sectionItems addObject:main];
+
+/*
+    YTSettingsSectionItem *appIcon = [%c(YTSettingsSectionItem)
+        itemWithTitle:LOC(@"CHANGE_APP_ICON")
+        titleDescription:nil
+        accessibilityIdentifier:nil
+        detailTextBlock:nil
+        selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
+            AppIconOptionsController *appIconController = [[AppIconOptionsController alloc] init];
+            [settingsViewController.navigationController pushViewController:appIconController animated:YES];
+            return YES;
+        }
+    ];
+    [sectionItems addObject:appIcon];
+*/
 
 # pragma mark - Video Controls Overlay Options
     YTSettingsSectionItem *videoControlOverlayGroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"VIDEO_CONTROLS_OVERLAY_OPTIONS") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
@@ -280,7 +296,7 @@ extern NSBundle *YTLitePlusBundle();
                 case 6:
                     return @"v17.38.10 (Fixes LowContrastMode)";
                 case 7:
-                    return @"v17.01.4 (Oldest Supported Version)";
+                    return @"v17.33.2 (Oldest Supported Version)";
                 case 0:
                 default:
                     return @"v18.49.3 (Last v18 Version)";
@@ -323,7 +339,7 @@ extern NSBundle *YTLitePlusBundle();
                     [settingsViewController reloadData];
                     return YES;
                 }],
-                [YTSettingsSectionItemClass checkmarkItemWithTitle:@"v17.01.4 (Oldest Supported Version)" titleDescription:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
+                [YTSettingsSectionItemClass checkmarkItemWithTitle:@"v17.33.2 (Oldest Supported Version)" titleDescription:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
                     [[NSUserDefaults standardUserDefaults] setInteger:7 forKey:@"versionSpoofer"];
                     [settingsViewController reloadData];
                     return YES;

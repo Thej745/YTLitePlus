@@ -76,7 +76,7 @@ static BOOL version7() {
 
 %group gVersion7
 %hook YTVersionUtils // Oldest Supported App Version (v17)
-+ (NSString *)appVersion { return @"17.01.4"; }
++ (NSString *)appVersion { return @"17.33.2"; }
 %end
 %end
 

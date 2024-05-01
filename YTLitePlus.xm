@@ -38,6 +38,9 @@ static BOOL IsEnabled(NSString *key) {
     return [[NSUserDefaults standardUserDefaults] boolForKey:key];
 }
 
+# pragma mark - Tweaks
+
+// Activate FLEX
 %hook YTAppDelegate
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
@@ -57,7 +60,23 @@ static BOOL IsEnabled(NSString *key) {
 }
 %end
 
-# pragma mark - Tweaks
+// Enable Alternate Icons
+%hook UIApplication
+- (BOOL)supportsAlternateIcons {
+    return YES;
+}
+%end
+
+// Fix Google Sign in by @PoomSmart and @level3tjg (qnblackcat/uYouPlus#684)
+%hook NSBundle
+- (NSDictionary *)infoDictionary {
+    NSMutableDictionary *info = %orig.mutableCopy;
+    if ([self isEqual:NSBundle.mainBundle])
+        info[@"CFBundleIdentifier"] = @"com.google.ios.youtube";
+    return info;
+}
+%end
+
 // Skips content warning before playing *some videos - @PoomSmart
 %hook YTPlayabilityResolutionUserActionUIController
 - (void)showConfirmAlert { [self confirmAlertDidPressConfirm]; }
